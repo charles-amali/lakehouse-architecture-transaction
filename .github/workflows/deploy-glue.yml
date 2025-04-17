@@ -1,0 +1,45 @@
+name: Deploy AWS Glue Job
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Install Dependencies for Testing
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Run Tests
+        run: |
+          pytest tests/
+
+      - name: Upload Glue Script to S3
+        run: aws s3 cp glue.py s3://my-glue-scripts-bkt/scripts/glue.py
+
+      - name: Deploy Glue Job
+        run: |
+          aws glue update-job --job-name Delta-lake-job --job-update '{
+            "Command": {
+              "Name": "glueetl",
+              "ScriptLocation": "s3://my-glue-scripts-bkt/scripts/glue.py",
+              "PythonVersion": "3"
+            },
+            "Role": "arn:aws:iam::724772083049:role/Glue_S3_Deltalake"
+          }'
+
