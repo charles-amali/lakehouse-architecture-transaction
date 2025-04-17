@@ -1,6 +1,6 @@
 import sys
 import types
-from unittest.mock import MagicMock  # Moved up to fix the NameError
+from unittest.mock import MagicMock
 import pytest
 
 # Mock awsglue modules
@@ -8,9 +8,13 @@ sys.modules['awsglue'] = types.ModuleType('awsglue')
 sys.modules['awsglue.transforms'] = types.ModuleType('awsglue.transforms')
 sys.modules['awsglue.utils'] = types.ModuleType('awsglue.utils')
 sys.modules['awsglue.context'] = types.ModuleType('awsglue.context')
-
-# Mock the getResolvedOptions function
 sys.modules['awsglue.utils'].getResolvedOptions = MagicMock()
+
+# ✅ Mock pyspark modules
+sys.modules['pyspark'] = types.ModuleType('pyspark')
+sys.modules['pyspark.context'] = types.ModuleType('pyspark.context')
+sys.modules['pyspark.sql'] = types.ModuleType('pyspark.sql')
+sys.modules['pyspark.sql.functions'] = types.ModuleType('pyspark.sql.functions')
 
 # Now import the actual code
 from glue_scripts.glue import merge_delta
