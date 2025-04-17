@@ -29,6 +29,7 @@ sys.modules['awsglue.job'] = types.ModuleType('awsglue.job')
 sys.modules['awsglue.utils'].getResolvedOptions = MagicMock()
 sys.modules['awsglue.context'].GlueContext = MagicMock()
 sys.modules['awsglue.job'].Job = MagicMock() 
+sys.modules['pyspark.sql.functions'].to_timestamp = MagicMock()
 
 sys.modules['delta'] = types.ModuleType('delta')
 sys.modules['delta.tables'] = types.ModuleType('delta.tables')
