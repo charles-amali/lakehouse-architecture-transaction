@@ -7,6 +7,9 @@ sys.modules['awsglue.transforms'] = types.ModuleType('awsglue.transforms')
 sys.modules['awsglue.utils'] = types.ModuleType('awsglue.utils')
 sys.modules['awsglue.context'] = types.ModuleType('awsglue.context')
 
+# Mock the getResolvedOptions function
+sys.modules['awsglue.utils'].getResolvedOptions = MagicMock()
+
 # Now import the actual code
 from glue_scripts.glue import merge_delta
 import pytest
