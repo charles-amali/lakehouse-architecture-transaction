@@ -25,10 +25,14 @@ sys.modules['awsglue'] = types.ModuleType('awsglue')
 sys.modules['awsglue.transforms'] = types.ModuleType('awsglue.transforms')
 sys.modules['awsglue.utils'] = types.ModuleType('awsglue.utils')
 sys.modules['awsglue.context'] = types.ModuleType('awsglue.context')
-sys.modules['awsglue.job'] = types.ModuleType('awsglue.job')  # 👈 ADD THIS
+sys.modules['awsglue.job'] = types.ModuleType('awsglue.job') 
 sys.modules['awsglue.utils'].getResolvedOptions = MagicMock()
 sys.modules['awsglue.context'].GlueContext = MagicMock()
-sys.modules['awsglue.job'].Job = MagicMock()  # 👈 AND THIS
+sys.modules['awsglue.job'].Job = MagicMock() 
+
+sys.modules['delta'] = types.ModuleType('delta')
+sys.modules['delta.tables'] = types.ModuleType('delta.tables')
+sys.modules['delta.tables'].DeltaTable = MagicMock()
 
 # Now import the actual code
 from glue_scripts.glue import merge_delta
