@@ -21,6 +21,15 @@ sys.modules['pyspark.sql'].SparkSession = MagicMock()
 sys.modules['pyspark.sql.functions'].col = MagicMock()
 sys.modules['pyspark.sql.functions'].lit = MagicMock()
 
+sys.modules['awsglue'] = types.ModuleType('awsglue')
+sys.modules['awsglue.transforms'] = types.ModuleType('awsglue.transforms')
+sys.modules['awsglue.utils'] = types.ModuleType('awsglue.utils')
+sys.modules['awsglue.context'] = types.ModuleType('awsglue.context')
+sys.modules['awsglue.job'] = types.ModuleType('awsglue.job')  # 👈 ADD THIS
+sys.modules['awsglue.utils'].getResolvedOptions = MagicMock()
+sys.modules['awsglue.context'].GlueContext = MagicMock()
+sys.modules['awsglue.job'].Job = MagicMock()  # 👈 AND THIS
+
 # Now import the actual code
 from glue_scripts.glue import merge_delta
 from unittest.mock import patch
