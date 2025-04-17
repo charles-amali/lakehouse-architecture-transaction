@@ -1,5 +1,7 @@
 import sys
 import types
+from unittest.mock import MagicMock  # Moved up to fix the NameError
+import pytest
 
 # Mock awsglue modules
 sys.modules['awsglue'] = types.ModuleType('awsglue')
@@ -12,8 +14,7 @@ sys.modules['awsglue.utils'].getResolvedOptions = MagicMock()
 
 # Now import the actual code
 from glue_scripts.glue import merge_delta
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 @patch("glue_scripts.glue.logger")
 @patch("glue_scripts.glue.DeltaTable")
