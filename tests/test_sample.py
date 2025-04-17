@@ -10,11 +10,12 @@ sys.modules['awsglue.utils'] = types.ModuleType('awsglue.utils')
 sys.modules['awsglue.context'] = types.ModuleType('awsglue.context')
 sys.modules['awsglue.utils'].getResolvedOptions = MagicMock()
 
-# ✅ Mock pyspark modules
+# ✅ Mock pyspark modules and SparkContext
 sys.modules['pyspark'] = types.ModuleType('pyspark')
 sys.modules['pyspark.context'] = types.ModuleType('pyspark.context')
 sys.modules['pyspark.sql'] = types.ModuleType('pyspark.sql')
 sys.modules['pyspark.sql.functions'] = types.ModuleType('pyspark.sql.functions')
+sys.modules['pyspark.context'].SparkContext = MagicMock()
 
 # Now import the actual code
 from glue_scripts.glue import merge_delta
