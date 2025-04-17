@@ -32,7 +32,7 @@ jobs:
           
 
       - name: Upload Glue Script to S3
-        run: aws s3 cp glue.py s3://my-glue-scripts-bkt/scripts/glue.py
+        run: aws s3 cp glue_scripts/glue.py s3://my-glue-scripts-bkt/scripts/glue.py
 
       - name: Deploy Glue Job
         run: |
