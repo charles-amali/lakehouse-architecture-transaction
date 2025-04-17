@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch, MagicMock
 from glue_scripts.glue import merge_delta
 # Assume merge_delta is in a file called glue.py
-from glue import merge_delta
+# from glue import merge_delta
 
 @patch("glue.logger")
 @patch("glue.DeltaTable")
