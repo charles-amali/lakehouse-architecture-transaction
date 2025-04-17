@@ -25,7 +25,7 @@ jobs:
 
       - name: Deploy Glue Job
         run: |
-          aws glue update-job --job-name your-glue-job-name --job-update '{
+          aws glue update-job --job-name glue.py --job-update '{
             "Command": {
               "Name": "glueetl",
               "ScriptLocation": "s3://my-glue-scripts-bkt/scripts/glue.py",
