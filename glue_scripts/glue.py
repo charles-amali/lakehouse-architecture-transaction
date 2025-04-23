@@ -11,12 +11,21 @@ from delta.tables import DeltaTable
 from pyspark.sql.functions import col, to_timestamp
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, DoubleType, DateType
 from pyspark.conf import SparkConf
+from delta import configure_spark_with_delta_pip
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 args = getResolvedOptions(sys.argv, ['JOB_NAME'])
+
+builder = SparkSession.builder \
+    .appName("DeltaETLJob") \
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+
+# This adds both `delta-core` and `delta-storage`
+spark = configure_spark_with_delta_pip(builder).getOrCreate()
 
 # spark = SparkSession.builder \
 #     .appName("DeltaLakeETLJob") \
@@ -44,9 +53,9 @@ args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 #     .getOrCreate()
 
 
-# glueContext = GlueContext(spark.sparkContext)
-# job = Job(glueContext)
-# job.init(args['JOB_NAME'], args)
+glueContext = GlueContext(spark.sparkContext)
+job = Job(glueContext)
+job.init(args['JOB_NAME'], args)
 
 conf = SparkConf()
 conf.set("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
