@@ -6,13 +6,11 @@ from pyspark.context import SparkContext
 from awsglue.context import GlueContext
 from awsglue.job import Job
 from pyspark.sql import SparkSession
-# from delta import DeltaTable
-from delta import *
 from delta.tables import DeltaTable
 from pyspark.sql.functions import col, to_timestamp
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, DoubleType, DateType
 from pyspark.conf import SparkConf
-# from delta import configure_spark_with_delta_pip
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,61 +18,22 @@ logger = logging.getLogger(__name__)
 
 args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 
-# builder = SparkSession.builder \
-#     .appName("DeltaETLJob") \
-#     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-#     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
 
-# # This adds both `delta-core` and `delta-storage`
-# spark = configure_spark_with_delta_pip(builder).getOrCreate()
-
-# spark = SparkSession.builder \
-#     .appName("DeltaLakeETLJob") \
-#     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-#     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-#     .config("spark.hadoop.mapreduce.fileoutputcommitter.marksuccessfuljobs", "false") \
-#     .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
-#     .config("spark.hadoop.fs.s3a.committer.name", "directory") \
-#     .getOrCreate()
-
-# spark = SparkSession.builder \
-#     .appName("MyDeltaApp") \
-#     .config("spark.jars.packages", "io.delta:delta-core_2.12:2.4.0") \
-#     .getOrCreate()
-
-# sc = SparkContext()
-# glueContext = GlueContext(sc)
-
-# spark = glueContext.spark_session \
-#     .newSession() \
-#     .builder \
-#     .appName("DeltaLakeETLJob") \
-#     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-#     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-#     .getOrCreate()
-
-builder = SparkSession.builder \
-    .appName("DeltaETL") \
+spark = SparkSession.builder \
+    .appName("DeltaLakeETLJob") \
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-    .config("spark.jars.packages", "io.delta:delta-core_2.12:2.4.0")  # Adjust this version if needed
-spark = builder.getOrCreate()
+    .config("spark.hadoop.mapreduce.fileoutputcommitter.marksuccessfuljobs", "false") \
+    .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("spark.hadoop.fs.s3a.committer.name", "directory") \
+    .getOrCreate()
+
+
 
 
 glueContext = GlueContext(spark.sparkContext)
 job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
-
-# conf = SparkConf()
-# conf.set("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
-# conf.set("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
-
-# sc = SparkContext()
-# glueContext = GlueContext(sc)
-# spark = glueContext.spark_session
-
-# Initialize Job
-# job = Job(glueContext)
 
 
 orders_schema = StructType([
