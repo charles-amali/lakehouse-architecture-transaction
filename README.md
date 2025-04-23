@@ -87,11 +87,11 @@ python scripts/deploy.py
 
 ## Project Structure
 ```
-├── glue_scripts/         # AWS Glue ETL scripts
-├── scripts/              # Utility scripts
-├── tests/               # Test cases
-├── .github/             # CI/CD workflows
-└── Data/                # Sample data files
+├── glue_scripts/          
+├── scripts/              
+├── tests/               
+├── .github/             
+└── Data/                
 ```
 
 ## Development
@@ -115,5 +115,5 @@ pytest tests/test_sample.py
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Authors
-- Your Name - [@yourusername](https://github.com/yourusername)
+- Your Name - [@yourusername](https://github.com/charles-amali)
 
