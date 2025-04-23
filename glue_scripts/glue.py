@@ -18,14 +18,20 @@ logger = logging.getLogger(__name__)
 
 args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 
+# spark = SparkSession.builder \
+#     .appName("DeltaLakeETLJob") \
+#     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+#     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+#     .config("spark.hadoop.mapreduce.fileoutputcommitter.marksuccessfuljobs", "false") \
+#     .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+#     .config("spark.hadoop.fs.s3a.committer.name", "directory") \
+#     .getOrCreate()
+
 spark = SparkSession.builder \
-    .appName("DeltaLakeETLJob") \
-    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-    .config("spark.hadoop.mapreduce.fileoutputcommitter.marksuccessfuljobs", "false") \
-    .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
-    .config("spark.hadoop.fs.s3a.committer.name", "directory") \
+    .appName("MyDeltaApp") \
+    .config("spark.jars.packages", "io.delta:delta-core_2.12:2.4.0") \
     .getOrCreate()
+
 
 glueContext = GlueContext(spark.sparkContext)
 job = Job(glueContext)
