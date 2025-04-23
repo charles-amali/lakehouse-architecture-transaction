@@ -20,6 +20,8 @@ sys.modules['pyspark.context'].SparkContext = MagicMock()
 sys.modules['pyspark.sql'].SparkSession = MagicMock()
 sys.modules['pyspark.sql.functions'].col = MagicMock()
 sys.modules['pyspark.sql.functions'].lit = MagicMock()
+sys.modules['pyspark.conf'] = types.ModuleType('pyspark.conf')
+sys.modules['pyspark.conf'].SparkConf = MagicMock()
 
 sys.modules['awsglue'] = types.ModuleType('awsglue')
 sys.modules['awsglue.transforms'] = types.ModuleType('awsglue.transforms')
