@@ -56,8 +56,10 @@ args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 builder = SparkSession.builder \
     .appName("DeltaETL") \
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+    .config("spark.jars.packages", "io.delta:delta-core_2.12:2.4.0")  # Adjust this version if needed
 spark = builder.getOrCreate()
+
 
 glueContext = GlueContext(spark.sparkContext)
 job = Job(glueContext)
