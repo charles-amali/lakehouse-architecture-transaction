@@ -20,13 +20,13 @@ logger = logging.getLogger(__name__)
 
 args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 
-builder = SparkSession.builder \
-    .appName("DeltaETLJob") \
-    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+# builder = SparkSession.builder \
+#     .appName("DeltaETLJob") \
+#     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+#     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
 
-# This adds both `delta-core` and `delta-storage`
-spark = configure_spark_with_delta_pip(builder).getOrCreate()
+# # This adds both `delta-core` and `delta-storage`
+# spark = configure_spark_with_delta_pip(builder).getOrCreate()
 
 # spark = SparkSession.builder \
 #     .appName("DeltaLakeETLJob") \
@@ -53,18 +53,23 @@ spark = configure_spark_with_delta_pip(builder).getOrCreate()
 #     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
 #     .getOrCreate()
 
+builder = SparkSession.builder \
+    .appName("DeltaETL") \
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+spark = builder.getOrCreate()
 
 glueContext = GlueContext(spark.sparkContext)
 job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 
-conf = SparkConf()
-conf.set("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
-conf.set("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+# conf = SparkConf()
+# conf.set("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+# conf.set("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
 
-sc = SparkContext()
-glueContext = GlueContext(sc)
-spark = glueContext.spark_session
+# sc = SparkContext()
+# glueContext = GlueContext(sc)
+# spark = glueContext.spark_session
 
 # Initialize Job
 job = Job(glueContext)
