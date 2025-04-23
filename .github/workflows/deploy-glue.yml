@@ -40,6 +40,10 @@ jobs:
             "Command": {
               "Name": "glueetl",
               "ScriptLocation": "s3://my-glue-scripts-bkt/scripts/glue.py",
+              "PythonVersion": "3"
+            },
+            "Role": "arn:aws:iam::724772083049:role/Glue_S3_Deltalake"
+          }'
 
       - name: Trigger Step Function Execution
         run: |
@@ -47,8 +51,6 @@ jobs:
             --state-machine-arn arn:aws:states:us-east-1:724772083049:stateMachine:lakehouse_state_machine \
             --name "glue-execution-$(date +%s)" \
             --region us-east-1
-              "PythonVersion": "3"
-            },
-            "Role": "arn:aws:iam::724772083049:role/Glue_S3_Deltalake"
-          }'
+
+          
 
