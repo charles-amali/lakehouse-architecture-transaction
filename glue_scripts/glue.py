@@ -12,7 +12,7 @@ from delta.tables import DeltaTable
 from pyspark.sql.functions import col, to_timestamp
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, DoubleType, DateType
 from pyspark.conf import SparkConf
-from delta import configure_spark_with_delta_pip
+# from delta import configure_spark_with_delta_pip
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -72,7 +72,7 @@ job.init(args['JOB_NAME'], args)
 # spark = glueContext.spark_session
 
 # Initialize Job
-job = Job(glueContext)
+# job = Job(glueContext)
 
 
 orders_schema = StructType([
