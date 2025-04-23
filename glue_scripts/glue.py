@@ -7,7 +7,7 @@ from awsglue.context import GlueContext
 from awsglue.job import Job
 from pyspark.sql import SparkSession
 from delta import *
-from delta.tables import DeltaTable
+# from delta.tables import DeltaTable
 from pyspark.sql.functions import col, to_timestamp
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, DoubleType, DateType
 
