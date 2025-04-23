@@ -42,7 +42,10 @@ jobs:
               "ScriptLocation": "s3://my-glue-scripts-bkt/scripts/glue.py",
               "PythonVersion": "3"
             },
-            "Role": "arn:aws:iam::724772083049:role/Glue_S3_Deltalake"
+            "Role": "arn:aws:iam::724772083049:role/Glue_S3_Deltalake",
+            "GlueVersion": "4.0",
+            "NumberOfWorkers": 2,
+            "WorkerType": "G.1X"
           }'
 
       - name: Trigger Step Function Execution
