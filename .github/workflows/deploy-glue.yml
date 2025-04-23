@@ -50,7 +50,7 @@ jobs:
             "DefaultArguments": {
                   "--extra-jars": "s3://delta-lake-bkt01/libs/delta-core_2.12-2.4.0.jar",
                   "--additional-python-modules": "delta-spark==2.0.0",
-                  "datalake-format": "delta-table"
+                  "--datalake-format": "delta-table"
             }
           }' 
 
