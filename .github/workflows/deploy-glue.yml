@@ -48,8 +48,8 @@ jobs:
             "WorkerType": "G.1X",
             "DefaultArguments": {
                 "--extra-jars": "s3://delta-lake-bkt01/libs/delta-core_2.12-2.4.0.jar"    
-  }
-          }'
+            },
+          }' 
 
       - name: Trigger Step Function Execution
         run: |
