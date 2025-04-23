@@ -10,7 +10,7 @@ from delta import *
 from delta.tables import DeltaTable
 from pyspark.sql.functions import col, to_timestamp
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, DoubleType, DateType
-
+from pyspark.conf import SparkConf
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -32,21 +32,32 @@ args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 #     .config("spark.jars.packages", "io.delta:delta-core_2.12:2.4.0") \
 #     .getOrCreate()
 
+# sc = SparkContext()
+# glueContext = GlueContext(sc)
+
+# spark = glueContext.spark_session \
+#     .newSession() \
+#     .builder \
+#     .appName("DeltaLakeETLJob") \
+#     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+#     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+#     .getOrCreate()
+
+
+# glueContext = GlueContext(spark.sparkContext)
+# job = Job(glueContext)
+# job.init(args['JOB_NAME'], args)
+
+conf = SparkConf()
+conf.set("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+conf.set("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+
 sc = SparkContext()
 glueContext = GlueContext(sc)
+spark = glueContext.spark_session
 
-spark = glueContext.spark_session \
-    .newSession() \
-    .builder \
-    .appName("DeltaLakeETLJob") \
-    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-    .getOrCreate()
-
-
-glueContext = GlueContext(spark.sparkContext)
+# Initialize Job
 job = Job(glueContext)
-job.init(args['JOB_NAME'], args)
 
 
 orders_schema = StructType([
