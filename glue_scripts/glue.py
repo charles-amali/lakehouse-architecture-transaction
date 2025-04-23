@@ -27,9 +27,20 @@ args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 #     .config("spark.hadoop.fs.s3a.committer.name", "directory") \
 #     .getOrCreate()
 
-spark = SparkSession.builder \
-    .appName("MyDeltaApp") \
-    .config("spark.jars.packages", "io.delta:delta-core_2.12:2.4.0") \
+# spark = SparkSession.builder \
+#     .appName("MyDeltaApp") \
+#     .config("spark.jars.packages", "io.delta:delta-core_2.12:2.4.0") \
+#     .getOrCreate()
+
+sc = SparkContext()
+glueContext = GlueContext(sc)
+
+spark = glueContext.spark_session \
+    .newSession() \
+    .builder \
+    .appName("DeltaLakeETLJob") \
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
     .getOrCreate()
 
 
