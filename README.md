@@ -30,7 +30,7 @@ A production-grade data pipeline that processes e-commerce transaction data usin
 - Efficient partitioning strategy
 
 ## System Architecture
-
+[images/architecture.jpg]
 ```plaintext
 Raw Data (S3) → AWS Glue (Processing) → Delta Lake (Storage) → Athena (Analytics)
 ```
@@ -61,15 +61,6 @@ pip install -r requirements.txt
 # Set up AWS resources
 aws s3 mb s3://delta-lake-bkt01
 aws s3 mb s3://my-glue-scripts-bkt
-```
-
-### Deployment
-```bash
-# Upload initial data
-python scripts/s3_upload.py
-
-# Deploy AWS resources
-python scripts/deploy.py
 ```
 
 ## Monitoring & Maintenance
@@ -115,5 +106,5 @@ pytest tests/test_sample.py
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Authors
-- Your Name - [@yourusername](https://github.com/charles-amali)
+- Your Name - [@charles-amali](https://github.com/charles-amali)
 
