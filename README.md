@@ -30,7 +30,7 @@ A production-grade data pipeline that processes e-commerce transaction data usin
 - Efficient partitioning strategy
 
 ## System Architecture
-"images/architecture.jpg"
+![Architecture Diagram](images/architecture.jpg)
 ```plaintext
 Raw Data (S3) → AWS Glue (Processing) → Delta Lake (Storage) → Athena (Analytics)
 ```
