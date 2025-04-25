@@ -31,9 +31,7 @@ A production-grade data pipeline that processes e-commerce transaction data usin
 
 ## System Architecture
 ![Architecture Diagram](images/architecture.jpg)
-```plaintext
-Raw Data (S3) → AWS Glue (Processing) → Delta Lake (Storage) → Athena (Analytics)
-```
+
 
 ### Data Flow
 1. Raw CSV files land in S3 (`/raw/`)
